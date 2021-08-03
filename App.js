@@ -6,14 +6,6 @@ import HomeScreen from './HomeScreen';
 import NotificationsScreen from './NotificationsScreen';
 import {SearchStudent} from "./SearchStudent";
 
-//function NotificationsScreen({ navigation }) {
-//  return (
-//    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//      <Button onPress={() => navigation.goBack()} title="Go back home" />
-//    </View>
-//  );
-//}
-
 const Drawer = createDrawerNavigator();
 
 export default class App extends Component {
@@ -23,7 +15,7 @@ export default class App extends Component {
           <Drawer.Navigator initialRouteName="Home">
             <Drawer.Screen name="HomeScreen" component={HomeScreen} />
             <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-              <Drawer.Screen name='SearchStudent' component={SearchStudent}/>
+              <Drawer.Screen name='Поиск студента' component={SearchStudent}/>
           </Drawer.Navigator>
         </NavigationContainer>
     );
