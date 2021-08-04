@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import moment from 'moment'
 import { Alert,  Button,  Platform,  Text,  StyleSheet,  ScrollView,  View, Dimensions, StatusBar, DrawerLayoutAndroid} from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-
-
+import { FontAwesome } from '@expo/vector-icons';
 
 export const HomeScreen = (props) => {
     const [items,setItems] = useState({})
@@ -12,17 +11,18 @@ export const HomeScreen = (props) => {
     useEffect(()=>{
         const getFetch = async () => {
 
-            for (let i = -5; i < 5; i++) {
+            for (let i = 0; i < 1; i++) {
                 let newDate = new Date();
                 let time = newDate.getTime() + i * 24 * 60 * 60 * 1000;
                 let strTime = timeToString(time);
                 strTime = moment(strTime, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001801&date=17.07.2021';
+                let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021';
                 await fetch(url)
                     .then(response => response.json())
                     .then(data => {
                         if (typeof data.schedule !== 'undefined') {
                             let dataSchedule = data.schedule;
+                            console.log(dataSchedule)
                             dataSchedule.forEach(k =>{
                                 schedule.push(k);
                             })
@@ -33,7 +33,7 @@ export const HomeScreen = (props) => {
             }
         };
         getFetch().then(r =>console.log('Данные получены'));
-    })
+    },[])
 
     let currDate = new Date();
     const loadItems = () => {
@@ -41,11 +41,18 @@ export const HomeScreen = (props) => {
             schedule.forEach(e =>{
                 const NewDate = moment(e.date, 'DD.MM.YYYY').format('YYYY-MM-DD');
                 items[NewDate] = []
+
             });
             schedule.forEach(e =>{
                 const NewDate = moment(e.date, 'DD.MM.YYYY').format('YYYY-MM-DD');
                 items[NewDate].push({
                     name: e.dis,
+                    pairNumber:e.pairnumber,
+                    room:e.room,
+                    area:e.area,
+                    teacher:e.teacher,
+                    timeStart:e.timestart,
+                    timeEnd:e.timeend,
                 });
             });
             const newItems = {};
@@ -58,9 +65,19 @@ export const HomeScreen = (props) => {
 
     const renderItem=(item)=> {
         return (
-            <View style={[styles.item, {height: item.height}]}><Text>{item.name}</Text></View>
+            <View style={[styles.item, {height: item.height}]}>
+                <FontAwesome name="circle-o" size={28} color="#00CCFF"/>
+                <Text style={{position:"relative",bottom:23,left:8}}>{item.pairNumber}</Text>
+                <Text>{item.name}</Text>
+                <Text>Кабинет:{item.room}</Text>
+                <Text>{item.area}</Text>
+                <Text>Преподователь:{item.teacher}</Text>
+                <Text>Начало: {item.timeStart}</Text>
+                <Text>Конец: {item.timeEnd}</Text>
+            </View>
         );
     }
+
 
     const renderEmptyDate=()=> {
         return (
@@ -89,13 +106,6 @@ export const HomeScreen = (props) => {
         )
 }
 
-
-
-
-
-
-
-
 // class HomeScreen extends React.Component {
 //     constructor(props) {
 //     super(props);
@@ -112,7 +122,7 @@ export const HomeScreen = (props) => {
 //             let time = newDate.getTime() + i * 24 * 60 * 60 * 1000;
 //             let strTime = this.timeToString(time);
 //             strTime = moment(strTime, 'YYYY-MM-DD').format('DD.MM.YYYY');
-//             let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=11200&form=2&group=12001907&date=' + strTime;
+//             let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=' + strTime;
 //             await fetch(url)
 //                 .then(response => response.json())
 //                 .then(data => {
