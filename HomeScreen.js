@@ -28,7 +28,7 @@ export const HomeScreen = (props) => {
             //     let time = newDate.getTime() + i * 24 * 60 * 60 * 1000;
             //     let strTime = timeToString(time);
             //     strTime = moment(strTime, 'YYYY-MM-DD').format('DD.MM.YYYY');
-            let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=14';
+            let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=180';
             await fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -99,8 +99,7 @@ export const HomeScreen = (props) => {
     const renderItem = (item) => {
         return (
             <View style={[styles.item, {height: item.height}]}>
-                <Text style={{fontSize:22}}>Пара: {item.pairNumber}</Text>
-                <Text style={{fontSize:30}}>Время: {item.timeStart}-{item.timeEnd}</Text>
+                <Text style={{fontSize:22 , borderStyle:"solid",borderBottomWidth:3,borderColor:'#7cff'}}>{item.pairNumber} Пара {item.timeStart}-{item.timeEnd}</Text>
                 <Text>{item.name}</Text>
                 <Text>{showRoom(item.room)}</Text>
                 <Text>{showArea(item.area)}</Text>
