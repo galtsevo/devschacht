@@ -37,7 +37,7 @@ export const HomeScreen = (props) => {
 
     let currDate = new Date();
     const loadItems = () => {
-        setTimeout(() => {
+
             schedule.forEach(e =>{
                 const NewDate = moment(e.date, 'DD.MM.YYYY').format('YYYY-MM-DD');
                 items[NewDate] = []
@@ -59,9 +59,14 @@ export const HomeScreen = (props) => {
             Object.keys(items).forEach(key => {newItems[key] = items[key];});
             setItems(newItems)
 
-        }, 1000);
+
     }
 
+    const show = (room) => {
+        if(room===null){
+            <Text>Нет кабинета</Text>
+        }
+    }
 
     const renderItem=(item)=> {
         return (
@@ -89,10 +94,10 @@ export const HomeScreen = (props) => {
         return r1.name !== r2.name;
     }
 
-    const timeToString=(time)=> {
-        const date = new Date(time);
-        return date.toISOString().split('T')[0];
-    }
+    // const timeToString=(time)=> {
+    //     const date = new Date(time);
+    //     return date.toISOString().split('T')[0];
+    // }
 
         return (
             <Agenda
