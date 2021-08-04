@@ -1,14 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import moment from 'moment'
-import { Alert,  Button,  Platform,  Text,  StyleSheet,  ScrollView,  View, Dimensions, StatusBar, DrawerLayoutAndroid} from 'react-native';
+import {
+    Alert,
+    Button,
+    Platform,
+    Text,
+    StyleSheet,
+    ScrollView,
+    View,
+    Dimensions,
+    StatusBar,
+    DrawerLayoutAndroid
+} from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import { FontAwesome } from '@expo/vector-icons';
+import {FontAwesome} from '@expo/vector-icons';
+import data from "./src/data";
 
 export const HomeScreen = (props) => {
-    const [items,setItems] = useState({})
-    const [schedule,setSchedule] = useState([])
+    const [items, setItems] = useState({})
+    const [schedule, setSchedule] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
         const getFetch = async () => {
 
             // for (let i = 0; i < 1; i++) {
@@ -16,81 +28,97 @@ export const HomeScreen = (props) => {
             //     let time = newDate.getTime() + i * 24 * 60 * 60 * 1000;
             //     let strTime = timeToString(time);
             //     strTime = moment(strTime, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=14';
-                await fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (typeof data.schedule !== 'undefined') {
-                            let dataSchedule = data.schedule;
-                            console.log(dataSchedule)
-                            dataSchedule.forEach(k =>{
-                                schedule.push(k);
-                            })
-                        }
-                    }).catch(e => {
-                        console.log('ERROR');
-                    })
+            let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=14';
+            await fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (typeof data.schedule !== 'undefined') {
+                        let dataSchedule = data.schedule;
+                        console.log(dataSchedule)
+                        dataSchedule.forEach(k => {
+                            schedule.push(k);
+                        })
+                    }
+                }).catch(e => {
+                    console.log('ERROR');
+                })
             // }
         };
-        getFetch().then(r =>console.log('Данные получены'));
-    },[])
+        getFetch().then(r => console.log('Данные получены'));
+    }, [schedule])
+
 
     let currDate = new Date();
     const loadItems = () => {
 
-            schedule.forEach(e =>{
-                const NewDate = moment(e.date, 'DD.MM.YYYY').format('YYYY-MM-DD');
-                items[NewDate] = []
+        schedule.forEach(e => {
+            const NewDate = moment(e.date, 'DD.MM.YYYY').format('YYYY-MM-DD');
+            items[NewDate] = []
 
+        });
+        schedule.forEach(e => {
+            const NewDate = moment(e.date, 'DD.MM.YYYY').format('YYYY-MM-DD');
+            items[NewDate].push({
+                name: e.dis,
+                pairNumber: e.pairnumber,
+                room: e.room,
+                area: e.area,
+                teacher: e.teacher,
+                timeStart: e.timestart,
+                timeEnd: e.timeend,
+                subGroup: e.subgroup,
             });
-            schedule.forEach(e =>{
-                const NewDate = moment(e.date, 'DD.MM.YYYY').format('YYYY-MM-DD');
-                items[NewDate].push({
-                    name: e.dis,
-                    pairNumber:e.pairnumber,
-                    room:e.room,
-                    area:e.area,
-                    teacher:e.teacher,
-                    timeStart:e.timestart,
-                    timeEnd:e.timeend,
-                });
-            });
-            const newItems = {};
-            Object.keys(items).forEach(key => {newItems[key] = items[key];});
-            setItems(newItems)
+        });
+        const newItems = {};
+        Object.keys(items).forEach(key => {
+            newItems[key] = items[key];
+        });
+        setItems(newItems)
 
 
     }
 
-    const show = (room) => {
-        if(room===null){
-            <Text>Нет кабинета</Text>
+    const showRoom = (room) => {
+        if (room === "null") {
+            return <Text>Кабинет не указан</Text>
+        } else return <Text>Кабинет: {room}</Text>
+    }
+    const showArea = (area) => {
+        if (area === "null") {
+            return <Text>Корпус не указан</Text>
+        } else return <Text>Корпус: {area}</Text>
+    }
+    const showSubGroup = (subGroup) => {
+        if (subGroup === "null") {
+            return <Text>Подгруппа не указана</Text>
+        } else {
+            return <Text>Подгруппа №: {subGroup}</Text>
         }
     }
 
-    const renderItem=(item)=> {
+    const renderItem = (item) => {
         return (
             <View style={[styles.item, {height: item.height}]}>
-                <FontAwesome name="circle-o" size={28} color="#00CCFF"/>
-                <Text style={{position:"relative",bottom:23,left:8}}>{item.pairNumber}</Text>
+                <Text style={{fontSize:22}}>Пара: {item.pairNumber}</Text>
+                <Text style={{fontSize:30}}>Время: {item.timeStart}-{item.timeEnd}</Text>
                 <Text>{item.name}</Text>
-                <Text>Кабинет:{item.room}</Text>
-                <Text>{item.area}</Text>
+                <Text>{showRoom(item.room)}</Text>
+                <Text>{showArea(item.area)}</Text>
+                <Text>{showSubGroup(item.subGroup)}</Text>
                 <Text>Преподователь:{item.teacher}</Text>
-                <Text>Начало: {item.timeStart}</Text>
-                <Text>Конец: {item.timeEnd}</Text>
+
             </View>
         );
     }
 
 
-    const renderEmptyDate=()=> {
+    const renderEmptyDate = () => {
         return (
             <View style={styles.emptyDate}><Text>This is empty date!</Text></View>
         );
     }
 
-    const rowHasChanged=(r1, r2)=> {
+    const rowHasChanged = (r1, r2) => {
         return r1.name !== r2.name;
     }
 
@@ -99,16 +127,19 @@ export const HomeScreen = (props) => {
     //     return date.toISOString().split('T')[0];
     // }
 
-        return (
-            <Agenda
-                items={items}
-                loadItemsForMonth={loadItems}
-                selected={currDate}
-                renderItem={renderItem}
-                renderEmptyDate={renderEmptyDate}
-                rowHasChanged={rowHasChanged}
-            />
-        )
+    return (
+        <Agenda
+            items={items}
+            loadItemsForMonth={loadItems}
+            selected={currDate}
+            renderItem={renderItem}
+            renderEmptyDate={renderEmptyDate}
+            rowHasChanged={rowHasChanged}
+            showRoom={showRoom}
+            showArea={showArea}
+            showSubGroup={showSubGroup}
+        />
+    )
 }
 
 // class HomeScreen extends React.Component {
@@ -204,19 +235,19 @@ export const HomeScreen = (props) => {
 // }
 
 const styles = StyleSheet.create({
-  item: {
-    backgroundColor: 'white',
-    flex: 1,
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
-    marginTop: 17
-  },
-  emptyDate: {
-    height: 15,
-    flex:1,
-    paddingTop: 30
-  }
+    item: {
+        backgroundColor: 'white',
+        flex: 1,
+        borderRadius: 5,
+        padding: 10,
+        marginRight: 10,
+        marginTop: 17
+    },
+    emptyDate: {
+        height: 15,
+        flex: 1,
+        paddingTop: 30
+    }
 });
 
 export default HomeScreen;
