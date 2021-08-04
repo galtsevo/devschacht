@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
 import NotificationsScreen from './NotificationsScreen';
 import {SearchStudent} from "./SearchStudent";
+import {SettingsApp} from './SettingsApp';
 
 const Drawer = createDrawerNavigator();
 
@@ -13,9 +14,10 @@ export default class App extends Component {
     return (
         <NavigationContainer>
           <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-            <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-              <Drawer.Screen name='Поиск студента' component={SearchStudent}/>
+            <Drawer.Screen name="Расписание" component={HomeScreen} />
+            <Drawer.Screen name="Уведомления" component={NotificationsScreen} />
+            <Drawer.Screen name='Поиск студента' component={SearchStudent}/>
+            <Drawer.Screen name='Настройки' component={SettingsApp}/>
           </Drawer.Navigator>
         </NavigationContainer>
     );

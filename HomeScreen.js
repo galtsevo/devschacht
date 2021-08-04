@@ -28,13 +28,13 @@ export const HomeScreen = (props) => {
             //     let time = newDate.getTime() + i * 24 * 60 * 60 * 1000;
             //     let strTime = timeToString(time);
             //     strTime = moment(strTime, 'YYYY-MM-DD').format('DD.MM.YYYY');
-            let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=180';
+            let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=10';
             await fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     if (typeof data.schedule !== 'undefined') {
                         let dataSchedule = data.schedule;
-                        console.log(dataSchedule)
+                        // console.log(dataSchedule)
                         dataSchedule.forEach(k => {
                             schedule.push(k);
                         })
