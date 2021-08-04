@@ -35,6 +35,7 @@ export const SearchStudent = () => {
                 onPress={() => Alert.alert('Simple Button pressed')}
 
             />
+            <Button onPress={() => navigation.goBack()} title="Go back home" />
         </View>
     );
 }

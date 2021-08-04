@@ -11,12 +11,12 @@ export const HomeScreen = (props) => {
     useEffect(()=>{
         const getFetch = async () => {
 
-            for (let i = 0; i < 1; i++) {
-                let newDate = new Date();
-                let time = newDate.getTime() + i * 24 * 60 * 60 * 1000;
-                let strTime = timeToString(time);
-                strTime = moment(strTime, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021';
+            // for (let i = 0; i < 1; i++) {
+            //     let newDate = new Date();
+            //     let time = newDate.getTime() + i * 24 * 60 * 60 * 1000;
+            //     let strTime = timeToString(time);
+            //     strTime = moment(strTime, 'YYYY-MM-DD').format('DD.MM.YYYY');
+                let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=14';
                 await fetch(url)
                     .then(response => response.json())
                     .then(data => {
@@ -30,7 +30,7 @@ export const HomeScreen = (props) => {
                     }).catch(e => {
                         console.log('ERROR');
                     })
-            }
+            // }
         };
         getFetch().then(r =>console.log('Данные получены'));
     },[])
