@@ -33,7 +33,7 @@ export const HomeScreen = (props) => {
             }
         };
         getFetch().then(r =>console.log('Данные получены'));
-    },[])
+    })
 
     let currDate = new Date();
     const loadItems = () => {
