@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
-import {View, StyleSheet, Button, Alert, TextInput} from "react-native";
+import {View, StyleSheet, Button, Alert, TextInput, Image} from "react-native";
 import {Picker} from '@react-native-picker/picker';
+import {NavigationContainer} from "@react-navigation/native";
 //
 
 
@@ -11,6 +12,7 @@ export const SearchStudent = () => {
     const [inputValue,setInputValue]=useState('');
     return (
         <View style={styles.container}>
+            <Image style={{ width: 50, height: 50,position:'relative'}} source={{uri:"https://reactnative.dev/docs/assets/p_cat2.png"}}/>
             <Picker
                 selectedValue={selectedValueGroup}
                 style={{ height: 50, width: 250 }}
@@ -35,7 +37,7 @@ export const SearchStudent = () => {
                 onPress={() => Alert.alert('Simple Button pressed')}
 
             />
-            <Button onPress={() => navigation.goBack()} title="Go back home" />
+
         </View>
     );
 }

@@ -6,20 +6,28 @@ import HomeScreen from './HomeScreen';
 import NotificationsScreen from './NotificationsScreen';
 import {SearchStudent} from "./SearchStudent";
 import {SettingsApp} from './SettingsApp';
+import {createNativeStackNavigator} from "react-native-screens/native-stack";
+import {GroupSearch} from "./GroupSearch";
+
 
 const Drawer = createDrawerNavigator();
-
+const Stack = createNativeStackNavigator();
 export default class App extends Component {
   render() {
     return (
+
         <NavigationContainer>
+
           <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="Расписание" component={HomeScreen} />
-            <Drawer.Screen name="Уведомления" component={NotificationsScreen} />
-            <Drawer.Screen name='Поиск студента' component={SearchStudent}/>
-            <Drawer.Screen name='Настройки' component={SettingsApp}/>
+            <Drawer.Screen name="Расписание" component={HomeScreen} options={{title:"Расписание"}} />
+            <Drawer.Screen name="Уведомления" component={NotificationsScreen} options={{title:"Уведомления"}} />
+            <Drawer.Screen name='Поиск студента' component={SearchStudent} options={{title:"Поиск студента"}}/>
+              <Drawer.Screen name='Поиск группы' component={GroupSearch} options={{title:"Поиск группы"}}/>
+            <Drawer.Screen name='Настройки' component={SettingsApp} options={{title:"Настройки"}}/>
           </Drawer.Navigator>
+
         </NavigationContainer>
+
     );
   }
 }

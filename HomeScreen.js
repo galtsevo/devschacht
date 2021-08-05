@@ -1,20 +1,14 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import moment from 'moment'
 import {
-    Alert,
-    Button,
-    Platform,
     Text,
     StyleSheet,
-    ScrollView,
-    View,
-    Dimensions,
-    StatusBar,
-    DrawerLayoutAndroid
+    View, Image,
 } from 'react-native';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import {FontAwesome} from '@expo/vector-icons';
-import data from "./src/data";
+import {Agenda} from 'react-native-calendars';
+
+
+
 
 export const HomeScreen = (props) => {
     const [items, setItems] = useState({})
@@ -28,7 +22,7 @@ export const HomeScreen = (props) => {
             //     let time = newDate.getTime() + i * 24 * 60 * 60 * 1000;
             //     let strTime = timeToString(time);
             //     strTime = moment(strTime, 'YYYY-MM-DD').format('DD.MM.YYYY');
-            let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=180r';
+            let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group=12001802&date=03.07.2021&period=180';
             await fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -67,7 +61,7 @@ export const HomeScreen = (props) => {
                 timeStart: e.timestart,
                 timeEnd: e.timeend,
                 subGroup: e.subgroup,
-                edWorkKind:e.edworkkind,
+                edWorkKind: e.edworkkind,
             });
         });
         const newItems = {};
@@ -99,8 +93,15 @@ export const HomeScreen = (props) => {
 
     const renderItem = (item) => {
         return (
+
             <View style={[styles.item, {height: item.height}]}>
-                <Text style={{fontSize:22 , borderStyle:"solid",borderBottomWidth:3,borderColor:'#7cff'}}>{item.pairNumber} Пара {item.timeStart}-{item.timeEnd}</Text>
+
+                <Text style={{
+                    fontSize: 22,
+                    borderStyle: "solid",
+                    borderBottomWidth: 3,
+                    borderColor: '#7cff'
+                }}>{item.pairNumber} Пара {item.timeStart}-{item.timeEnd}</Text>
                 <Text>{item.name}</Text>
                 <Text>{item.edWorkKind} </Text>
                 <Text>{showRoom(item.room)}</Text>
@@ -129,6 +130,8 @@ export const HomeScreen = (props) => {
     // }
 
     return (
+
+
         <Agenda
             items={items}
             loadItemsForMonth={loadItems}
@@ -140,6 +143,7 @@ export const HomeScreen = (props) => {
             showArea={showArea}
             showSubGroup={showSubGroup}
         />
+
     )
 }
 
