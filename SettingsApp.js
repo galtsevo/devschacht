@@ -13,7 +13,7 @@ export const SettingsApp = (props) => {
 
 
     useEffect(() => {
-        StatusBar.setHidden(false);
+         StatusBar.setHidden(true);
         const getFetch = async () => {
             let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/SearchGroup.php?groupsearch=1';
             // let url = 'https://jsonplaceholder.typicode.com/posts';
@@ -85,16 +85,17 @@ export const SettingsApp = (props) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <Tab value={index} onChange={setIndex}>
-                <Tab.Item title="Группа" />
-                <Tab.Item title="Студент" />
-                {/*<Tab.Item title="cart" />*/}
-            </Tab>
+            {/*<Tab value={index} onChange={setIndex}>*/}
+            {/*    <Tab.Item title="Группа" />*/}
+            {/*    <Tab.Item title="Студент" />*/}
+            {/*    /!*<Tab.Item title="cart" />*!/*/}
+            {/*</Tab>*/}
 
-            <TabView value={index} onChange={setIndex} >
-                <TabView.Item style={{ width: '100%' }}>
+            {/*<TabView value={index} onChange={setIndex} >*/}
+                {/*<TabView.Item style={{ width: '100%' }}>*/}
                     <View style={styles.container}>
                         <SearchBar
+                            lightTheme
                             round
                             searchIcon={{ size: 24 }}
                             onChangeText={(text) => searchFilterFunction(text)}
@@ -109,14 +110,11 @@ export const SettingsApp = (props) => {
                             renderItem={ItemView}
                         />
                     </View>
-                </TabView.Item>
-                <TabView.Item style={{ backgroundColor: 'blue', width: '100%' }}>
-                    <Text h1>Favorite</Text>
-                </TabView.Item>
-                {/*<TabView.Item style={{ backgroundColor: 'green', width: '100%' }}>*/}
-                {/*    <Text h1>Cart</Text>*/}
                 {/*</TabView.Item>*/}
-            </TabView>
+                {/*<TabView.Item style={{ backgroundColor: 'blue', width: '100%' }}>*/}
+                {/*    <Text h1>Favorite</Text>*/}
+                {/*</TabView.Item>*/}
+            {/*</TabView>*/}
 
 
         </SafeAreaView>
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     itemStyle: {
-        padding: 10,
+        padding: 15,
     },
 });
 
