@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView, Text, StyleSheet, View, FlatList, StatusBar, Button, Image} from 'react-native';
-import { SearchBar, Tab, TabView  } from 'react-native-elements';
+import {SearchBar, Tab, TabView} from 'react-native-elements';
+import {groupService} from "./group-service";
 
 
-export const GroupSearch = ({ navigation }) => {
+export const GroupSearch = () => {
     const [search, setSearch] = useState('');
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
-
-    const [index, setIndex] = React.useState(0);
-
 
 
     useEffect(() => {
         StatusBar.setHidden(true);
         const getFetch = async () => {
             let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/SearchGroup.php?groupsearch=1';
-            // let url = 'https://jsonplaceholder.typicode.com/posts';
+
             await fetch(url)
                 .then(response => response.json())
                 .then(responseJson => {
                     setFilteredDataSource(responseJson.groups);
                     setMasterDataSource(responseJson.groups);
-                    // console.log(responseJson.groups);
+
                 }).catch((error) => {
                     console.error(error);
                 })
@@ -30,7 +28,6 @@ export const GroupSearch = ({ navigation }) => {
         getFetch().then(r => console.log('Данные поиска студентов получены'));
 
     }, []);
-
     const searchFilterFunction = (text) => {
         // Check if searched text is not blank
         if (text) {
@@ -51,10 +48,10 @@ export const GroupSearch = ({ navigation }) => {
             // Update FilteredDataSource with masterDataSource
             setFilteredDataSource(masterDataSource);
             setSearch(text);
+
         }
     };
-
-    const ItemView = ({ item }) => {
+    const ItemView = ({item}) => {
         return (
             // Flat List Item
             <Text style={styles.itemStyle} onPress={() => getItem(item)}>
@@ -64,7 +61,6 @@ export const GroupSearch = ({ navigation }) => {
             </Text>
         );
     };
-
     const ItemSeparatorView = () => {
         return (
             // Flat List Item Separator
@@ -77,29 +73,27 @@ export const GroupSearch = ({ navigation }) => {
             />
         );
     };
-
     const getItem = (item) => {
         // Function for click on an item
-        alert('Id : ' + item.id + ' Title : ' + item.name);
+        groupService.changeGroup(item.name);
+        const arr=[]
+        arr.push(item)
+        setFilteredDataSource(arr)
+        setSearch(item.name)
+
+
+
     };
-
     return (
+        <SafeAreaView style={{flex: 1}}>
+            <Image style={{width: 50, height: 50, position: 'relative'}}
+                   source={{uri: "https://reactnative.dev/docs/assets/p_cat2.png"}}/>
 
-        <SafeAreaView style={{ flex: 1 }}>
-            <Image style={{ width: 50, height: 50,position:'relative'}} source={{uri:"https://reactnative.dev/docs/assets/p_cat2.png"}}/>
-            {/*<Tab value={index} onChange={setIndex}>*/}
-            {/*    <Tab.Item title="Группа" />*/}
-            {/*    <Tab.Item title="Студент" />*/}
-            {/*    /!*<Tab.Item title="cart" />*!/*/}
-            {/*</Tab>*/}
-
-            {/*<TabView value={index} onChange={setIndex} >*/}
-            {/*<TabView.Item style={{ width: '100%' }}>*/}
             <View style={styles.container}>
                 <SearchBar
                     lightTheme
                     round
-                    searchIcon={{ size: 24 }}
+                    searchIcon={{size: 24}}
                     onChangeText={(text) => searchFilterFunction(text)}
                     onClear={(text) => searchFilterFunction('')}
                     placeholder="Начните вводить номер группы..."
@@ -113,18 +107,13 @@ export const GroupSearch = ({ navigation }) => {
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
                     renderItem={ItemView}
+
                 />
 
             </View>
-            {/*</TabView.Item>*/}
-            {/*<TabView.Item style={{ backgroundColor: 'blue', width: '100%' }}>*/}
-            {/*    <Text h1>Favorite</Text>*/}
-            {/*</TabView.Item>*/}
-            {/*</TabView>*/}
-
-
         </SafeAreaView>
     );
+
 }
 
 const styles = StyleSheet.create({
@@ -135,4 +124,5 @@ const styles = StyleSheet.create({
         padding: 15,
     },
 });
+
 

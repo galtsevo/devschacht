@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, StyleSheet, View, Button, Image} from 'react-native';
 
 
-//TODO: Добавить обработку нажатия на студента и группу
+
 export const SettingsApp = ({navigation}) => {
 
     return (
