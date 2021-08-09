@@ -80,9 +80,6 @@ export const GroupSearch = () => {
         arr.push(item)
         setFilteredDataSource(arr)
         setSearch(item.name)
-
-
-
     };
     return (
         <SafeAreaView style={{flex: 1}}>

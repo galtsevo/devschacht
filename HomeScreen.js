@@ -18,15 +18,20 @@ export const HomeScreen = () => {
     const data = useStore(groupService.selectedGroup)
 
     useEffect(() => {
-
         const getFetch = async () => {
+
+
             let url = 'http://dekanat.bsu.edu.ru/blocks/bsu_api/bsu_schedule/readStudent.php?os=android&dep=1112&form=2&group='+data+'&date=03.07.2021&period=180'
             console.log(url)
             await fetch(url)
                 .then(response => response.json())
                 .then(data => {
+
                     if (typeof data.schedule !== 'undefined') {
                         let dataSchedule = data.schedule;
+                        if(schedule.length > 0){
+                            setSchedule([])
+                        }
                         dataSchedule.forEach(k => {
                             schedule.push(k);
                         })
@@ -37,7 +42,7 @@ export const HomeScreen = () => {
             // }
         };
         getFetch().then(r => console.log('Данные получены'));
-    },[data])
+    },[data,schedule])
 
 
     let currDate = new Date();
@@ -140,6 +145,7 @@ export const HomeScreen = () => {
             showRoom={showRoom}
             showArea={showArea}
             showSubGroup={showSubGroup}
+
         />
 
     )
