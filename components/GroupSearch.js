@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, Text, StyleSheet, View, FlatList, StatusBar, Button, Image} from 'react-native';
 import {SearchBar, Tab, TabView} from 'react-native-elements';
-import {groupService} from "./group-service";
+import {groupService} from "../services/group-service";
 
 
 export const GroupSearch = () => {
@@ -25,7 +25,7 @@ export const GroupSearch = () => {
                     console.error(error);
                 })
         };
-        getFetch().then(r => console.log('Данные поиска студентов получены'));
+        getFetch().then(r => console.log('Данные поиска групп получены'));
 
     }, []);
     const searchFilterFunction = (text) => {

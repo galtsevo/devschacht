@@ -6,7 +6,7 @@ import {
     View, Image,
 } from 'react-native';
 import {Agenda} from 'react-native-calendars';
-import {groupService} from "./group-service";
+import {groupService} from "../services/group-service";
 import {useStore} from "effector-react";
 
 
