@@ -3,13 +3,14 @@ import {SafeAreaView, Text, StyleSheet, View, FlatList, StatusBar, Image} from '
 import {SearchBar} from 'react-native-elements';
 
 import {studentService} from "../services/student-service";
+import {useStore} from "effector-react";
 
 
 export const SearchStudent = () => {
-    const [search, setSearch] = useState('');
-    const [filteredDataSource, setFilteredDataSource] = useState([]);
-    const [masterDataSource, setMasterDataSource] = useState([]);
 
+    const search = useStore(studentService.search)
+    const [filteredDataSource,setFilteredDataSource]=useState([])
+    const [masterDataSource,setMasterDataSource]=useState([])
 
     useEffect(() => {
         StatusBar.setHidden(true);
@@ -42,13 +43,13 @@ export const SearchStudent = () => {
                 const textData = text.toUpperCase();
                 return itemData.indexOf(textData) > -1;
             });
-            setFilteredDataSource(newData);
-            setSearch(text);
+           setFilteredDataSource(newData);
+            studentService.changeSearch(text);
         } else {
             // Inserted text is blank
             // Update FilteredDataSource with masterDataSource
             setFilteredDataSource(masterDataSource);
-            setSearch(text);
+            studentService.changeSearch(text);
 
         }
     };
@@ -78,7 +79,7 @@ export const SearchStudent = () => {
         const arr=[]
         arr.push(item)
         setFilteredDataSource(arr)
-        setSearch(item.fio)
+        studentService.changeSearch(item.fio)
     };
     return (
         <SafeAreaView style={{flex: 1}}>
