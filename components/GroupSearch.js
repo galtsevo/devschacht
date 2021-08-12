@@ -4,7 +4,7 @@ import {SearchBar, Tab, TabView} from 'react-native-elements';
 import {groupService} from "../services/group-service";
 
 
-export const GroupSearch = () => {
+export const GroupSearch = ({navigation}) => {
     const [search, setSearch] = useState('');
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
@@ -80,6 +80,7 @@ export const GroupSearch = () => {
         arr.push(item)
         setFilteredDataSource(arr)
         setSearch(item.name)
+        navigation.navigate('Расписание')
     };
     return (
         <SafeAreaView style={{flex: 1}}>
