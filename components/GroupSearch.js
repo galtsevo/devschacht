@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, Text, StyleSheet, View, FlatList, StatusBar, Button, Image} from 'react-native';
+import {SafeAreaView, Text, StyleSheet, View, FlatList, StatusBar, Button, Image, TouchableOpacity} from 'react-native';
 import {SearchBar, Tab, TabView} from 'react-native-elements';
 import {groupService} from "../services/group-service";
 
@@ -53,12 +53,17 @@ export const GroupSearch = ({navigation}) => {
     };
     const ItemView = ({item}) => {
         return (
+
+            <TouchableOpacity onPress={() => getItem(item)}>
+                <View style={styles.button}>
+                    <Text style={styles.buttonText} onPress={() => getItem(item)}>
+                        {item.id}
+                        {item.name.toUpperCase()}
+                    </Text>
+                </View>
+            </TouchableOpacity>
             // Flat List Item
-            <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-                {item.id}
-                {''}
-                {item.name.toUpperCase()}
-            </Text>
+
         );
     };
     const ItemSeparatorView = () => {
@@ -117,10 +122,23 @@ export const GroupSearch = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
+
     },
     itemStyle: {
         padding: 15,
     },
+    button: {
+        marginBottom: 30,
+
+        alignItems: 'flex-start',
+        minWidth:"100%",
+        backgroundColor: 'powderblue'
+    },
+    buttonText: {
+        textAlign: 'center',
+        padding: 20,
+        color: 'white'
+    }
 });
 
 

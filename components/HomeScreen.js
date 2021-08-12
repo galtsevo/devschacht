@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import moment from 'moment'
 import {
     Text,
@@ -46,6 +46,7 @@ export const HomeScreen = () => {
 
 
     let currDate = new Date();
+
     const loadItems = () => {
 
         schedule.forEach(e => {
@@ -127,10 +128,6 @@ export const HomeScreen = () => {
         return r1.name !== r2.name;
     }
 
-    // const timeToString=(time)=> {
-    //     const date = new Date(time);
-    //     return date.toISOString().split('T')[0];
-    // }
 
     return (
 
@@ -145,7 +142,7 @@ export const HomeScreen = () => {
             showRoom={showRoom}
             showArea={showArea}
             showSubGroup={showSubGroup}
-
+            windowSize={5}
         />
 
     )
